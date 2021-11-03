@@ -7,6 +7,7 @@
 #import <GLKit/GLKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVKit/AVKit.h>
+#import <better_player/better_player-Swift.h>
 
 #if !__has_feature(objc_arc)
 #error Code Requires ARC.

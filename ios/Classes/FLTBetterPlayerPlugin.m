@@ -5,7 +5,6 @@
 #import "FLTBetterPlayerPlugin.h"
 #import <AVFoundation/AVFoundation.h>
 #import <GLKit/GLKit.h>
-#import <KTVHTTPCache/KTVHTTPCache.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVKit/AVKit.h>
 
@@ -302,15 +301,15 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
         headers = @{};
     }
     AVPlayerItem* item;
-    if (useCache){
+    /*if (useCache){
         [KTVHTTPCache downloadSetAdditionalHeaders:headers];
         NSURL *proxyURL = [KTVHTTPCache proxyURLWithOriginalURL:url];
         item = [AVPlayerItem playerItemWithURL:proxyURL];
-    } else {
+    } else {*/
         AVURLAsset* asset = [AVURLAsset URLAssetWithURL:url
                                                 options:@{@"AVURLAssetHTTPHeaderFieldsKey" : headers}];
         item = [AVPlayerItem playerItemWithAsset:asset];
-    }
+    //}
     
     if (@available(iOS 10.0, *) && overriddenDuration > 0) {
         item.forwardPlaybackEndTime = CMTimeMake(overriddenDuration/1000, 1);
@@ -941,7 +940,7 @@ NSMutableDictionary*  _artworkImageDict;
     _timeObserverIdDict = [NSMutableDictionary dictionary];
     _artworkImageDict = [NSMutableDictionary dictionary];
     _dataSourceDict = [NSMutableDictionary dictionary];
-    [KTVHTTPCache proxyStart:nil];
+    //[KTVHTTPCache proxyStart:nil];
     return self;
 }
 
@@ -1184,10 +1183,10 @@ NSMutableDictionary*  _artworkImageDict;
             }
             
             BOOL useCache = false;
-            id useCacheObject = [dataSource objectForKey:@"useCache"];
-            if (useCacheObject != [NSNull null]) {
-                useCache = [[dataSource objectForKey:@"useCache"] boolValue];
-            }
+            //id useCacheObject = [dataSource objectForKey:@"useCache"];
+            //if (useCacheObject != [NSNull null]) {
+            //    useCache = [[dataSource objectForKey:@"useCache"] boolValue];
+            //}
             
             if (headers == nil){
                 headers = @{};
@@ -1287,7 +1286,7 @@ NSMutableDictionary*  _artworkImageDict;
         } else if ([@"setMixWithOthers" isEqualToString:call.method]){
             [player setMixWithOthers:[argsMap[@"mixWithOthers"] boolValue]];
         } else if ([@"clearCache" isEqualToString:call.method]){
-            [KTVHTTPCache cacheDeleteAllCaches];
+            //[KTVHTTPCache cacheDeleteAllCaches];
         } else {
             result(FlutterMethodNotImplemented);
         }

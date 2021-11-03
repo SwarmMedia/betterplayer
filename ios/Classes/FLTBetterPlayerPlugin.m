@@ -919,7 +919,7 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
 NSMutableDictionary* _dataSourceDict;
 NSMutableDictionary*  _timeObserverIdDict;
 NSMutableDictionary*  _artworkImageDict;
-
+CacheManager* _cacheManager;
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel =
@@ -940,7 +940,8 @@ NSMutableDictionary*  _artworkImageDict;
     _timeObserverIdDict = [NSMutableDictionary dictionary];
     _artworkImageDict = [NSMutableDictionary dictionary];
     _dataSourceDict = [NSMutableDictionary dictionary];
-    //[KTVHTTPCache proxyStart:nil];
+    _cacheManager = [[CacheManager alloc] init];
+    [_cacheManager setup];
     return self;
 }
 
@@ -1183,10 +1184,17 @@ NSMutableDictionary*  _artworkImageDict;
             }
             
             BOOL useCache = false;
-            //id useCacheObject = [dataSource objectForKey:@"useCache"];
-            //if (useCacheObject != [NSNull null]) {
-            //    useCache = [[dataSource objectForKey:@"useCache"] boolValue];
-            //}
+            id useCacheObject = [dataSource objectForKey:@"useCache"];
+            if (useCacheObject != [NSNull null]) {
+                useCache = [[dataSource objectForKey:@"useCache"] boolValue];
+
+                if (useCache) {
+                    NSNumber* maxCacheSize = [NSNumber numberWithInt:100*1024*1024];
+                    [_cacheManager setMaxCacheSize:maxCacheSize];
+                }
+            }
+
+
             
             if (headers == nil){
                 headers = @{};

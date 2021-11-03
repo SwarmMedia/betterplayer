@@ -297,7 +297,7 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
     return [self setDataSourceURL:[NSURL fileURLWithPath:path] withKey:key withHeaders: @{} withCache: false overriddenDuration:overriddenDuration];
 }
 
-- (void)setDataSourceURL:(NSURL*)url withKey:(NSString*)key withHeaders:(NSDictionary*)headers withCache:(BOOL)useCache overriddenDuration:(int) overriddenDuration{
+- (void)setDataSourceURL:(NSURL*)url withKey:(NSString*)key withHeaders:(NSDictionary*)headers withCache:(BOOL)useCache cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration{
     if (headers == [NSNull null]){
         headers = @{};
     }
@@ -1194,8 +1194,6 @@ CacheManager* _cacheManager;
                     [_cacheManager setMaxCacheSize:maxCacheSize];
                 }
             }
-
-
             
             if (headers == nil){
                 headers = @{};
@@ -1208,9 +1206,11 @@ CacheManager* _cacheManager;
                 } else {
                     assetPath = [_registrar lookupKeyForAsset:assetArg];
                 }
+                // cacheKey:cacheKey cacheManager:_cacheManager
                 [player setDataSourceAsset:assetPath withKey:key overriddenDuration:overriddenDuration];
             } else if (uriArg) {
-                [player setDataSourceURL:[NSURL URLWithString:uriArg] withKey:key withHeaders:headers withCache: useCache overriddenDuration:overriddenDuration];
+                NSString* cacheKey = uriArg;
+                [player setDataSourceURL:[NSURL URLWithString:uriArg] withKey:key withHeaders:headers withCache: useCache cacheKey:cacheKey cacheManager:_cacheManager overriddenDuration:overriddenDuration];
             } else {
                 result(FlutterMethodNotImplemented);
             }

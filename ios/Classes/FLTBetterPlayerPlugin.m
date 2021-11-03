@@ -292,9 +292,9 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
   return transform;
 }
 
-- (void)setDataSourceAsset:(NSString*)asset withKey:(NSString*)key overriddenDuration:(int) overriddenDuration{
+- (void)setDataSourceAsset:(NSString*)asset withKey:(NSString*)key cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration{
     NSString* path = [[NSBundle mainBundle] pathForResource:asset ofType:nil];
-    return [self setDataSourceURL:[NSURL fileURLWithPath:path] withKey:key withHeaders: @{} withCache: false overriddenDuration:overriddenDuration];
+    return [self setDataSourceURL:[NSURL fileURLWithPath:path] withKey:key withHeaders: @{} withCache: false cacheKey:cacheKey cacheManager:cacheManager overriddenDuration:overriddenDuration];
 }
 
 - (void)setDataSourceURL:(NSURL*)url withKey:(NSString*)key withHeaders:(NSDictionary*)headers withCache:(BOOL)useCache cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration{
@@ -1198,6 +1198,9 @@ CacheManager* _cacheManager;
             if (headers == nil){
                 headers = @{};
             }
+
+            NSString* cacheKey = uriArg;
+
             if (assetArg) {
                 NSString* assetPath;
                 NSString* package = dataSource[@"package"];
@@ -1206,10 +1209,9 @@ CacheManager* _cacheManager;
                 } else {
                     assetPath = [_registrar lookupKeyForAsset:assetArg];
                 }
-                // cacheKey:cacheKey cacheManager:_cacheManager
-                [player setDataSourceAsset:assetPath withKey:key overriddenDuration:overriddenDuration];
+
+                [player setDataSourceAsset:assetPath withKey:key cacheKey:cacheKey cacheManager:_cacheManager overriddenDuration:overriddenDuration];
             } else if (uriArg) {
-                NSString* cacheKey = uriArg;
                 [player setDataSourceURL:[NSURL URLWithString:uriArg] withKey:key withHeaders:headers withCache: useCache cacheKey:cacheKey cacheManager:_cacheManager overriddenDuration:overriddenDuration];
             } else {
                 result(FlutterMethodNotImplemented);

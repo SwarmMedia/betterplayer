@@ -90,6 +90,7 @@ import PINCache
     @objc public func getCachingPlayerItemForNormalPlayback(_ url: URL, cacheKey: String?, videoExtension: String?, headers: Dictionary<NSObject,AnyObject>) -> AVPlayerItem? {
         let mimeTypeResult = getMimeType(url:url, explicitVideoExtension: videoExtension)
         if (mimeTypeResult.1 == "application/vnd.apple.mpegurl"){
+            // takes this code path (hls)
             let reverseProxyURL = server?.reverseProxyURL(from: url)!
             let playerItem = AVPlayerItem(url: reverseProxyURL!)
             return playerItem
@@ -101,19 +102,23 @@ import PINCache
 
     // Get a CachingPlayerItem either from the network if it's not cached or from the cache.
     @objc public func getCachingPlayerItem(_ url: URL, cacheKey: String?,videoExtension: String?, headers: Dictionary<NSObject,AnyObject>) -> CachingPlayerItem? {
+        NSLog("getCachingPlayerItem");
         let playerItem: CachingPlayerItem
         let _key: String = cacheKey ?? url.absoluteString
         // Fetch ongoing pre-cached url if it exists
         if self._preCachedURLs[_key] != nil {
+            NSLog("ongoing");
             playerItem = self._preCachedURLs[_key]!
             self._preCachedURLs.removeValue(forKey: _key)
         } else {
             // Trying to retrieve a track from cache syncronously
             let data = try? storage?.object(forKey: _key)
             if data != nil {
+                NSLog("Cache hit");
                 // The file is cached.
                 self._existsInStorage = true
                 let mimeTypeResult = getMimeType(url:url, explicitVideoExtension: videoExtension)
+                NSLog("mime: ");
                 if (mimeTypeResult.1.isEmpty){
                     NSLog("Cache error: couldn't find mime type for url: \(url.absoluteURL). For this URL cache didn't work and video will be played without cache.")
                     playerItem = CachingPlayerItem(url: url, cacheKey: _key, headers: headers)
@@ -121,6 +126,7 @@ import PINCache
                     playerItem = CachingPlayerItem(data: data!, mimeType: mimeTypeResult.1, fileExtension: mimeTypeResult.0)
                 }
             } else {
+                NSLog("Cache miss");
                 // The file is not cached.
                 playerItem = CachingPlayerItem(url: url, cacheKey: _key, headers: headers)
                 self._existsInStorage = false

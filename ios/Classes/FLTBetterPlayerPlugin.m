@@ -298,17 +298,17 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
 }
 
 - (void)setDataSourceURL:(NSURL*)url withKey:(NSString*)key withHeaders:(NSDictionary*)headers withCache:(BOOL)useCache cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration{
-    if (headers == [NSNull null]){
+    if (headers == nil){
         headers = @{};
     }
     AVPlayerItem* item;
     if (useCache) {
-        if (cacheKey == [NSNull null]){
+        if (cacheKey == nil){
             cacheKey = nil;
         }
-        NSString* videoExtension = nil;
 
-        item = [cacheManager getCachingPlayerItemForNormalPlayback:url cacheKey:cacheKey videoExtension: videoExtension headers:headers];
+        NSLog(@"Cache enabled %@", cacheKey);
+        item = [cacheManager getCachingPlayerItemForNormalPlayback:url cacheKey:cacheKey videoExtension: nil headers:headers];
     } else {
         AVURLAsset* asset = [AVURLAsset URLAssetWithURL:url
                                                 options:@{@"AVURLAssetHTTPHeaderFieldsKey" : headers}];

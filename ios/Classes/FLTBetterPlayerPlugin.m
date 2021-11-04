@@ -302,15 +302,18 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
         headers = @{};
     }
     AVPlayerItem* item;
-    /*if (useCache){
-        [KTVHTTPCache downloadSetAdditionalHeaders:headers];
-        NSURL *proxyURL = [KTVHTTPCache proxyURLWithOriginalURL:url];
-        item = [AVPlayerItem playerItemWithURL:proxyURL];
-    } else {*/
+    if (useCache) {
+        if (cacheKey == [NSNull null]){
+            cacheKey = nil;
+        }
+        NSString* videoExtension = nil;
+
+        item = [cacheManager getCachingPlayerItemForNormalPlayback:url cacheKey:cacheKey videoExtension: videoExtension headers:headers];
+    } else {
         AVURLAsset* asset = [AVURLAsset URLAssetWithURL:url
                                                 options:@{@"AVURLAssetHTTPHeaderFieldsKey" : headers}];
         item = [AVPlayerItem playerItemWithAsset:asset];
-    //}
+    }
     
     if (@available(iOS 10.0, *) && overriddenDuration > 0) {
         item.forwardPlaybackEndTime = CMTimeMake(overriddenDuration/1000, 1);

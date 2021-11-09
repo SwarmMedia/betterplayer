@@ -260,14 +260,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
         case VideoEventType.pipStop:
           value = value.copyWith(isPip: false);
           break;
-        case VideoEventType.skipNext:
-          // TODO: Handle this case.
-          break;
-        case VideoEventType.skipPrevious:
-          // TODO: Handle this case.
-          break;
         case VideoEventType.unknown:
-          print('Warning: unknown event type');
           break;
       }
     }

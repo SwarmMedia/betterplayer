@@ -1040,13 +1040,11 @@ CacheManager* _cacheManager;
     
     [commandCenter.previousTrackCommand addTargetWithHandler: ^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         player.eventSink(@{@"event" : @"skipPrevious"});
-        NSLog(@"prev");
         return MPRemoteCommandHandlerStatusSuccess;
     }];
 
     [commandCenter.nextTrackCommand addTargetWithHandler: ^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         player.eventSink(@{@"event" : @"skipNext"});
-        NSLog(@"next");
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     

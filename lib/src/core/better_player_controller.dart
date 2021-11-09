@@ -1130,7 +1130,7 @@ class BetterPlayerController {
       case VideoEventType.skipPrevious:
         _postEvent(BetterPlayerEvent(BetterPlayerEventType.skipPrevious));
         break;
-        
+
       default:
 
         ///TODO: Handle when needed

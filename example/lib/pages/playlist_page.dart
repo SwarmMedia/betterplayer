@@ -42,12 +42,6 @@ class _PlaylistPageState extends State<PlaylistPage> {
             type: BetterPlayerSubtitlesSourceType.file,
             url: await Utils.getFileUrl(Constants.fileExampleSubtitlesUrl),
           ),
-          notificationConfiguration: BetterPlayerNotificationConfiguration(
-            showNotification: true,
-            title: "Elephant dream",
-            author: "Some author",
-            imageUrl: Constants.catImageUrl,
-          ),
           placeholder: Image.network(
             Constants.catImageUrl,
             fit: BoxFit.cover,

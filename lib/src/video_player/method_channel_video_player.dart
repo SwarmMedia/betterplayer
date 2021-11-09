@@ -332,7 +332,6 @@ class MethodChannelVideoPlayer extends VideoPlayerPlatform {
         map = event;
       }
       final String? eventType = map["event"] as String?;
-      print('eventType $eventType');
       final String? key = map["key"] as String?;
       switch (eventType) {
         case 'initialized':
@@ -416,21 +415,18 @@ class MethodChannelVideoPlayer extends VideoPlayerPlatform {
           );
 
         case 'skipNext':
-          print('returning skipNext');
           return VideoEvent(
             eventType: VideoEventType.skipNext,
             key: key,
           );
 
         case 'skipPrevious':
-          print('returning skipPrevious');
           return VideoEvent(
             eventType: VideoEventType.skipPrevious,
             key: key,
           );
 
         default:
-          print('returning unknown');
           return VideoEvent(
             eventType: VideoEventType.unknown,
             key: key,

@@ -17,11 +17,14 @@ class _BasenotePlayerPageState extends State<BasenotePlayerPage> {
     final betterPlayerConfiguration = BetterPlayerConfiguration(
       aspectRatio: 16 / 9,
       fit: BoxFit.contain,
+      autoDispose: false,
     );
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
 
     _betterPlayerController.addEventsListener((p0) {
-      print(p0.betterPlayerEventType);
+      if (p0.betterPlayerEventType != BetterPlayerEventType.bufferingUpdate) {
+        print(p0.betterPlayerEventType);
+      }
     });
 
     final cacheConfiguration = BetterPlayerCacheConfiguration(
@@ -30,6 +33,18 @@ class _BasenotePlayerPageState extends State<BasenotePlayerPage> {
       maxCacheSize: 10 * 1024 * 1024,
       maxCacheFileSize: 10 * 1024 * 1024,
     );
+
+    _queue.add(BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      "https://videodelivery.net/352b56abe8ffd9c01b5d498bb99db14d/manifest/video.m3u8",
+      cacheConfiguration: cacheConfiguration,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: "Way Out West",
+        author: "Shulman Smith",
+        imageUrl: Constants.catImageUrl,
+      ),
+    ));
 
     _queue.add(BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
@@ -43,17 +58,6 @@ class _BasenotePlayerPageState extends State<BasenotePlayerPage> {
       ),
     ));
 
-    _queue.add(BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      "https://videodelivery.net/352b56abe8ffd9c01b5d498bb99db14d/manifest/video.m3u8",
-      cacheConfiguration: cacheConfiguration,
-      notificationConfiguration: BetterPlayerNotificationConfiguration(
-        showNotification: true,
-        title: "Way Out West",
-        author: "Shulman Smith",
-        imageUrl: Constants.catImageUrl,
-      ),
-    ));
 
     _queue.add(BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
@@ -76,18 +80,14 @@ class _BasenotePlayerPageState extends State<BasenotePlayerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cache"),
+        title: Text("Basenote Example"),
       ),
       body: Column(
         children: [
-          const SizedBox(height: 8),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.all(16),
             child: Text(
-              "Player with cache enabled. To test this feature, first plays "
-              "video, then leave this page, turn internet off and enter "
-              "page again. You should be able to play video without "
-              "internet connection.",
+              "Simulates a similar use case to the BaseNote app.",
               style: TextStyle(fontSize: 16),
             ),
           ),

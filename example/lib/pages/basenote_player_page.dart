@@ -9,39 +9,66 @@ class BasenotePlayerPage extends StatefulWidget {
 
 class _BasenotePlayerPageState extends State<BasenotePlayerPage> {
   late BetterPlayerController _betterPlayerController;
-  late BetterPlayerDataSource _betterPlayerDataSource;
+  int _queueIndex = 0;
+  final List<BetterPlayerDataSource> _queue = [];
 
   @override
   void initState() {
-    BetterPlayerConfiguration betterPlayerConfiguration =
-        BetterPlayerConfiguration(
+    final betterPlayerConfiguration = BetterPlayerConfiguration(
       aspectRatio: 16 / 9,
       fit: BoxFit.contain,
-    );
-    _betterPlayerDataSource = BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      "https://videodelivery.net/9dd71b21e6694c84bb5f49e906668d01/manifest/video.m3u8",
-      cacheConfiguration: BetterPlayerCacheConfiguration(
-        useCache: true,
-        preCacheSize: 10 * 1024 * 1024,
-        maxCacheSize: 10 * 1024 * 1024,
-        maxCacheFileSize: 10 * 1024 * 1024,
-
-        ///Android only option to use cached video between app sessions
-        key: "testCacheKey",
-      ),
-      notificationConfiguration: BetterPlayerNotificationConfiguration(
-        showNotification: true,
-        title: "Elephant dream",
-        author: "Some author",
-        imageUrl: Constants.catImageUrl,
-      ),
     );
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
 
     _betterPlayerController.addEventsListener((p0) {
       print(p0.betterPlayerEventType);
     });
+
+    final cacheConfiguration = BetterPlayerCacheConfiguration(
+      useCache: true,
+      preCacheSize: 10 * 1024 * 1024,
+      maxCacheSize: 10 * 1024 * 1024,
+      maxCacheFileSize: 10 * 1024 * 1024,
+    );
+
+    _queue.add(BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      "https://videodelivery.net/9dd71b21e6694c84bb5f49e906668d01/manifest/video.m3u8",
+      cacheConfiguration: cacheConfiguration,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: "Right There Beside You",
+        author: "Bronze Radio Return",
+        imageUrl: Constants.catImageUrl,
+      ),
+    ));
+
+    _queue.add(BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      "https://videodelivery.net/352b56abe8ffd9c01b5d498bb99db14d/manifest/video.m3u8",
+      cacheConfiguration: cacheConfiguration,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: "Way Out West",
+        author: "Shulman Smith",
+        imageUrl: Constants.catImageUrl,
+      ),
+    ));
+
+    _queue.add(BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      "https://videodelivery.net/59b3abe0bcb40bd27bbba1d3646a0c8c/manifest/video.m3u8",
+      cacheConfiguration: cacheConfiguration,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: "The Game",
+        author: "RinRin",
+        imageUrl: Constants.catImageUrl,
+      ),
+    ));
+
+    _betterPlayerController.setupDataSource(_queue[0]);
+
     super.initState();
   }
 
@@ -69,31 +96,49 @@ class _BasenotePlayerPageState extends State<BasenotePlayerPage> {
             child: BetterPlayer(controller: _betterPlayerController),
           ),
           TextButton(
-            child: Text("Start pre cache"),
-            onPressed: () {
-              _betterPlayerController.preCache(_betterPlayerDataSource);
-            },
+            child: Text("Skip Next"),
+            onPressed: skipNext,
           ),
           TextButton(
-            child: Text("Stop pre cache"),
-            onPressed: () {
-              _betterPlayerController.stopPreCache(_betterPlayerDataSource);
-            },
-          ),
-          TextButton(
-            child: Text("Play video"),
-            onPressed: () {
-              _betterPlayerController.setupDataSource(_betterPlayerDataSource);
-            },
-          ),
-          TextButton(
-            child: Text("Clear cache"),
-            onPressed: () {
-              _betterPlayerController.clearCache();
-            },
+            child: Text("Skip Prev"),
+            onPressed: skipPrev,
           ),
         ],
       ),
     );
+  }
+
+  void skipPrev() {
+    if (!hasPrev()) {
+      return;
+    }
+    _queueIndex--;
+    _playInternal(_queue[_queueIndex]);
+  }
+
+  void skipNext() {
+    if (!hasNext()) {
+      return;
+    }
+    _queueIndex++;
+    _playInternal(_queue[_queueIndex]);
+  }
+
+  bool hasPrev() {
+    return _queueIndex > 0;
+  }
+
+  bool hasNext() {
+    return _queueIndex < _queue.length - 1;
+  }
+
+  Future _playInternal(BetterPlayerDataSource source) async {
+    if (_betterPlayerController.videoPlayerController != null &&
+        (_betterPlayerController.isVideoInitialized() ?? false)) {
+      await _betterPlayerController.pause();
+    }
+
+    await _betterPlayerController.setupDataSource(source);
+    await _betterPlayerController.play();
   }
 }

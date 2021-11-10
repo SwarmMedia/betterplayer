@@ -80,7 +80,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   List<Widget> buildExampleElementWidgets() {
     return [
-      _buildExampleElementWidget("Basenote player", () {
+      _buildExampleElementWidget("Basenote example", () {
         _navigateToPage(BasenotePlayerPage());
       }),
       _buildExampleElementWidget("Basic player", () {

@@ -87,7 +87,7 @@ class _BasenotePlayerPageState extends State<BasenotePlayerPage> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
-              "Simulates a similar use case to the BaseNote app.",
+              "Simulates a use case similar to the BaseNote app.",
               style: TextStyle(fontSize: 16),
             ),
           ),

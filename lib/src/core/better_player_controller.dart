@@ -147,10 +147,6 @@ class BetterPlayerController {
   ///UI won't be shown (show only player surface).
   bool get controlsEnabled => _controlsEnabled;
 
-  ///Overridden aspect ratio which will be used instead of aspect ratio passed
-  ///in configuration.
-  double? _overriddenAspectRatio;
-
   ///Was Picture in Picture opened.
   bool _wasInPipMode = false;
 
@@ -1024,12 +1020,6 @@ class BetterPlayerController {
         pause();
       }
     }
-  }
-
-  // ignore: use_setters_to_change_properties
-  ///Setup overridden aspect ratio.
-  void setOverriddenAspectRatio(double aspectRatio) {
-    _overriddenAspectRatio = aspectRatio;
   }
 
   ///Enable Picture in Picture (PiP) mode. [betterPlayerGlobalKey] is required

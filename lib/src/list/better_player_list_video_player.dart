@@ -78,13 +78,9 @@ class _BetterPlayerListVideoPlayerState
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return AspectRatio(
-      aspectRatio: _betterPlayerController!.getAspectRatio() ??
-          BetterPlayerUtils.calculateAspectRatio(context),
-      child: BetterPlayer(
-        key: Key("${_getUniqueKey()}_player"),
-        controller: _betterPlayerController!,
-      ),
+    return BetterPlayer(
+      key: Key("${_getUniqueKey()}_player"),
+      controller: _betterPlayerController!,
     );
   }
 

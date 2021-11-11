@@ -73,7 +73,7 @@ class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
   Widget build(BuildContext context) {
     final BetterPlayerController betterPlayerController =
         BetterPlayerController.of(context);
-    
+
     final innerContainer = Container(
       width: double.infinity,
       color: betterPlayerController

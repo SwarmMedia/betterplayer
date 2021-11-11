@@ -1032,13 +1032,6 @@ class BetterPlayerController {
     _overriddenAspectRatio = aspectRatio;
   }
 
-  ///Get aspect ratio used in current video. If aspect ratio is null, then
-  ///aspect ratio from BetterPlayerConfiguration will be used. Otherwise
-  ///[_overriddenAspectRatio] will be used.
-  double? getAspectRatio() {
-    return _overriddenAspectRatio ?? betterPlayerConfiguration.aspectRatio;
-  }
-
   ///Enable Picture in Picture (PiP) mode. [betterPlayerGlobalKey] is required
   ///to open PiP mode in iOS. When device is not supported, PiP mode won't be
   ///open.

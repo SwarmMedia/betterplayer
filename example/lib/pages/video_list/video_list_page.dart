@@ -12,7 +12,7 @@ class VideoListPage extends StatefulWidget {
 }
 
 class _VideoListPageState extends State<VideoListPage> {
-  final _random = new Random();
+  final _random = Random();
   final List<String> _videos = [
     Constants.bugBuckBunnyVideoUrl,
     Constants.forBiggerBlazesUrl,

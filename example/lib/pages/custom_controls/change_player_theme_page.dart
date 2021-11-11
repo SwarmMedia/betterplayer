@@ -19,7 +19,7 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
     String url = Constants.bugBuckBunnyVideoUrl;
     _dataSource =
         BetterPlayerDataSource(BetterPlayerDataSourceType.network, url);
-    _betterPlayerController = new BetterPlayerController(
+    _betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
         autoDispose: true,
         controlsConfiguration: BetterPlayerControlsConfiguration(
@@ -60,7 +60,7 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
                     setState(() {
                       _playerTheme = BetterPlayerTheme.material;
                       _betterPlayerController.pause();
-                      _betterPlayerController = new BetterPlayerController(
+                      _betterPlayerController = BetterPlayerController(
                         BetterPlayerConfiguration(
                           autoDispose: true,
                           controlsConfiguration:
@@ -79,7 +79,7 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
                     setState(() {
                       _playerTheme = BetterPlayerTheme.cupertino;
                       _betterPlayerController.pause();
-                      _betterPlayerController = new BetterPlayerController(
+                      _betterPlayerController = BetterPlayerController(
                         BetterPlayerConfiguration(
                           autoDispose: true,
                           controlsConfiguration:
@@ -98,7 +98,7 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
                     setState(() {
                       _playerTheme = BetterPlayerTheme.custom;
                       _betterPlayerController.pause();
-                      _betterPlayerController = new BetterPlayerController(
+                      _betterPlayerController = BetterPlayerController(
                         BetterPlayerConfiguration(
                           autoDispose: true,
                           controlsConfiguration:

@@ -14,7 +14,7 @@ class ReusableVideoListPage extends StatefulWidget {
 class _ReusableVideoListPageState extends State<ReusableVideoListPage> {
   ReusableVideoListController videoListController =
       ReusableVideoListController();
-  final _random = new Random();
+  final _random = Random();
   final List<String> _videos = [
     Constants.forBiggerBlazesUrl,
     Constants.forBiggerJoyridesVideoUrl,

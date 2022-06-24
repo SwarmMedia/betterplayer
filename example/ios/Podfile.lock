@@ -13,7 +13,7 @@ PODS:
   - HLSCachingReverseProxyServer (0.2.0):
     - GCDWebServer (~> 3.5)
     - PINCache (~> 3.0)
-  - path_provider (0.0.1):
+  - path_provider_ios (0.0.1):
     - Flutter
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
@@ -30,7 +30,7 @@ DEPENDENCIES:
   - better_player (from `.symlinks/plugins/better_player/ios`)
   - Flutter (from `Flutter`)
   - HLSCachingReverseProxyServer (from `https://github.com/SwarmMedia/HLSCachingReverseProxyServer.git`, commit `7bf8bfad3ecedd518e8903ed93a727bdbd10beb4`)
-  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
@@ -48,8 +48,8 @@ EXTERNAL SOURCES:
   HLSCachingReverseProxyServer:
     :commit: 7bf8bfad3ecedd518e8903ed93a727bdbd10beb4
     :git: https://github.com/SwarmMedia/HLSCachingReverseProxyServer.git
-  path_provider:
-    :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
 
@@ -64,11 +64,11 @@ SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   HLSCachingReverseProxyServer: 53dec5ae8ab02330b5cd09cbe03e9a04a43b353a
-  path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: 7fd2f55c59a5ec8f48880d8c7a1ea923d2e5d42a
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

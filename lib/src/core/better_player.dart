@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:wakelock/wakelock.dart';
 
-
 ///Widget which uses provided controller to render video player.
 class BetterPlayer extends StatefulWidget {
   const BetterPlayer({Key? key, required this.controller}) : super(key: key);

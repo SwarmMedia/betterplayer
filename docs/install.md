@@ -4,7 +4,11 @@
 
 ```yaml
 dependencies:
+<<<<<<< HEAD
   better_player: ^0.0.79
+=======
+  better_player: ^0.0.83
+>>>>>>> f6a77cf (Feature/flutter 3.0 (#1023))
 ```
 
 2. Install it

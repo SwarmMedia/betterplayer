@@ -428,7 +428,7 @@ void main() {
           eventCount += 1;
         });
         betterPlayerMockController.startNextVideoTimer();
-        await Future.delayed(const Duration(milliseconds: 3000), () {});
+        await Future.delayed(const Duration(milliseconds: 2999), () {});
         expect(eventCount, 3);
       });
     },
